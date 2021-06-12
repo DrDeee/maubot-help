@@ -8,20 +8,20 @@ jobs:
     container: dock.mau.dev/maubot/maubot:latest
     steps:
       - name: Checkout Project
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       
       - name: build Project
         run: |
           
           echo "::stop-commands::`echo -n ${{ github.token }} | sha256sum | head -c 64`" # disable command workflow processing
-          echo ::set-env name=BUILD::$(mbc build /__w/maubot_fffapi_plugin/maubot_fffapi_plugin) || exit
+          echo ::set-env name=BUILD::$(mbc build) || exit
           echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::" # enable workflow command processing
       
       - name: yamler
         uses: juliojimenez/yamler@v0
         id: yamler
         with:
-          yaml-file: /__w/maubot_fffapi_plugin/maubot_fffapi_plugin/maubot.yaml    
+          yaml-file: ./maubot.yaml    
       
       - name: generate filename
         id: filename
