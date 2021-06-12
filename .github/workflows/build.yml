@@ -19,7 +19,7 @@ jobs:
         run: echo "::set-output name=file_name::${{ steps.yamler.outputs.id }}-v${{ steps.yamler.outputs.version }}.mbp"
       
       - name: Build plugin
-        run: mbc build -o ${{ steps.filename.outputs.file_name}})
+        run: mbc build -o ${{ steps.filename.outputs.file_name}}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
