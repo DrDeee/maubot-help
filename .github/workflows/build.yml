@@ -12,7 +12,7 @@ jobs:
       
       - name: build Project
         run: |
-          dir
+          ls
           echo "::stop-commands::`echo -n ${{ github.token }} | sha256sum | head -c 64`" # disable command workflow processing
           echo ::set-env name=BUILD::$(mbc build) || exit
           echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::" # enable workflow command processing
