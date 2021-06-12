@@ -21,7 +21,7 @@ jobs:
       - name: Build plugin
         run: |
           ls
-          mbc build -o ${{ steps.filename.outputs.file_name}}
+          mbc build ./ -o ${{ steps.filename.outputs.file_name}}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
