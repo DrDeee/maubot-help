@@ -1,0 +1,10 @@
+maubot: 0.1.0
+id: re.fffutu.help
+version: 1.0.1
+license: MIT
+modules:
+  - help
+main_class: HelpPlugin
+config: false
+extra_files:
+  - base-config.yaml
