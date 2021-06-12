@@ -10,13 +10,6 @@ jobs:
       - name: Checkout Project
         uses: actions/checkout@v2
       
-      - name: build Project
-        run: |
-          ls
-          echo "::stop-commands::`echo -n ${{ github.token }} | sha256sum | head -c 64`" # disable command workflow processing
-          echo ::set-env name=BUILD::$(mbc build) || exit
-          echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::" # enable workflow command processing
-      
       - name: yamler
         uses: juliojimenez/yamler@v0
         id: yamler
@@ -25,10 +18,14 @@ jobs:
       
       - name: generate filename
         id: filename
+        run: echo "::set-output name=file_name::${{ steps.yamler.outputs.id }}-v${{ steps.yamler.outputs.version }}.mbp"
+      
+      - name: build Project
         run: |
-          echo "::set-output name=file_path::/opt/maubot/${{ steps.yamler.outputs.id }}-v${{ steps.yamler.outputs.version }}.mbp"
-          echo "::set-output name=file_name::${{ steps.yamler.outputs.id }}-v${{ steps.yamler.outputs.version }}.mbp"
-        
+          ls
+          echo "::stop-commands::`echo -n ${{ github.token }} | sha256sum | head -c 64`" # disable command workflow processing
+          echo ::set-env name=BUILD::$(mbc build -o ${{ steps.filename.outputs.file_name}}) || exit
+          echo "::`echo -n ${{ github.token }} | sha256sum | head -c 64`::"        
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -48,6 +45,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ${{ steps.filename.outputs.file_path }}
+          asset_path: ./${{ steps.filename.outputs.file_name }}
           asset_name: ${{ steps.filename.outputs.file_name }}
           asset_content_type: application/zip
