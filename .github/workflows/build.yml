@@ -9,7 +9,7 @@ jobs:
       - name: Checkout Project
         uses: actions/checkout@v2
       - name: Build plugin
-        uses: DrDeee/maubot-plugin-builder@v1.0.0
+        uses: DrDeee/maubot-plugin-builder@v1
         id: build
       - name: Create Release
         id: create_release
