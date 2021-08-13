@@ -7,7 +7,7 @@ centrally as a JSON file.
 1. Install the plugin with the GUI of Maubot
 2. Add your Matrix ID to the developers
 3. Create a category index and a command index (see [here](https://github.com/drdeee/matrix-help-index))
-4. Execute `!help reload
+4. Execute `!help reload`
 
 ### Commands
 `!help`: Shows all commands
